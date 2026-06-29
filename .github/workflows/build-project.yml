@@ -10,11 +10,9 @@ jobs:
       contents: write
     steps:
     - uses: actions/checkout@v4
-      with:
-        ref: ${{ github.head_ref }}
     
     - name: Setup Bun
-      uses: oven-sh/setup-bun@v1
+      uses: oven-sh/setup-bun@v2
       with:
         bun-version: latest
 
@@ -25,9 +23,9 @@ jobs:
       run: bun run build.js
 
     - name: Commit build artifacts
-      uses: stefanzweifel/git-auto-commit-action@v5
-      with:
-        commit_message: "chore: automated build artifacts update"
-        # Force add dist folders in case they are in .gitignore
-        add_options: '-f'
-        file_pattern: 'dist/* docs/static/dist/*'
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add -f dist/ docs/static/dist/
+        git commit -m "chore: automated build artifacts update" || echo "No changes to commit"
+        git push
