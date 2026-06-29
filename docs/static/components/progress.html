@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation - Lumora CSS Docs</title>
+  <link rel="stylesheet" href="/dist/lumora.css" id="theme-stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <style>
+    /* Premium UI Variables */
+    :root {
+      --bg-color: #f8fafc;
+      --bg-surface: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+      --primary-color: #6366f1;
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    }
+    
+    html[data-theme="dark"] {
+      --bg-color: #0b0f19;
+      --bg-surface: #111827;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #1e293b;
+      --glass-bg: rgba(11, 15, 25, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.05);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      margin: 0;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Outfit', system-ui, sans-serif;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+    /* Layout */
+    .sidebar {
+      width: 280px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-right: 1px solid var(--border-color);
+      padding: 2rem 1.5rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      transition: all 0.3s ease;
+      z-index: 20;
+    }
+    
+    .layout-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      max-width: 100%;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 1.25rem 4rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      gap: 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+    
+    .header-link {
+      color: var(--text-main);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+      opacity: 0.7;
+      transition: all 0.2s ease;
+    }
+    .header-link:hover { opacity: 1; transform: translateY(-1px); }
+    
+    /* Main Content */
+    .main-content {
+      padding: 4rem 5rem;
+      max-width: 100%;
+      width: 100%;
+      box-sizing: border-box;
+      margin: 0 auto;
+      max-width: 1100px; /* Readability wrapper */
+    }
+    
+    /* Typography */
+    .main-content > h1 { 
+      font-size: 3rem; 
+      font-weight: 800; 
+      margin-top: 0;
+      margin-bottom: 1.5rem; 
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+    .main-content > h2 { 
+      font-size: 2rem; 
+      font-weight: 700; 
+      margin-top: 3rem; 
+      margin-bottom: 1.25rem; 
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+    .main-content > h3 { 
+      font-size: 1.4rem; 
+      font-weight: 600; 
+      margin-top: 2rem; 
+      margin-bottom: 1rem; 
+      color: var(--text-main); 
+    }
+    .main-content > p, .main-content > ul, .main-content > ol { 
+      line-height: 1.8; 
+      margin-bottom: 1.5rem; 
+      color: var(--text-muted); 
+      font-size: 1.05rem;
+    }
+    
+    /* Code styling */
+    .main-content > pre {
+      background: #0f111a;
+      padding: 1.5rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .main-content code { 
+      font-family: 'Fira Code', monospace; 
+      font-size: 0.9rem;
+    }
+    p code, li code {
+      background: var(--border-color);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      color: var(--primary-color);
+      font-size: 0.9em;
+    }
+    
+    /* Preview block */
+    .preview-block {
+      padding: 2.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      margin: 2rem 0;
+      background: var(--bg-surface);
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: visible;
+      z-index: 10;
+    }
+    .preview-block:hover, .preview-block:focus-within {
+      z-index: 99;
+    }
+    .preview-block::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 4px;
+      background: var(--primary-gradient);
+      opacity: 0.5;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    }
+    
+    /* Sidebar Navigation */
+    .sidebar-brand {
+      font-size: 1.75rem; 
+      font-weight: 800; 
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 2rem; 
+      display: flex; 
+      align-items: center; 
+      gap: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    
+    .sidebar-title {
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-main);
+      padding: 0.5rem 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      list-style: none;
+    }
+    
+    .sidebar-title::-webkit-details-marker {
+      display: none;
+    }
+    
+    details {
+      margin-bottom: 1rem;
+    }
+    
+    details > summary::after {
+      content: '▼';
+      font-size: 0.7em;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+    }
+    details[open] > summary::after {
+      transform: rotate(180deg);
+    }
+    
+    .sidebar-link {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 8px;
+      margin-bottom: 0.15rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+    }
+    .sidebar-link:hover {
+      background-color: rgba(99, 102, 241, 0.05);
+      color: var(--text-main);
+    }
+    .sidebar-link.active {
+      background-color: rgba(99, 102, 241, 0.1);
+      color: var(--primary-color);
+      border-left-color: var(--primary-color);
+      font-weight: 600;
+    }
+    
+    /* Theme Toggle */
+    .theme-toggle {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-sm);
+    }
+    .theme-toggle:hover {
+      transform: rotate(15deg) scale(1.1);
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#brand-grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <defs>
+          <linearGradient id="brand-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#6366f1" />
+            <stop offset="100%" stop-color="#a855f7" />
+          </linearGradient>
+        </defs>
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      Lumora
+    </div>
+    
+    <details open>
+      <summary class="sidebar-title">Getting Started</summary>
+      <a href="/" class="sidebar-link">Introduction</a>
+      <a href="/lumora-vs-bootstrap" class="sidebar-link">Lumora vs Bootstrap</a>
+    </details>
+    
+    <details >
+      <summary class="sidebar-title">Foundation</summary>
+      <a href="/foundation/colors" class="sidebar-link">Colors</a>
+    <a href="/foundation/layout" class="sidebar-link">Layout</a>
+    <a href="/foundation/reboot" class="sidebar-link">Reboot</a>
+    <a href="/foundation/typography" class="sidebar-link">Typography</a>
+    <a href="/foundation/utilities" class="sidebar-link">Utilities</a>
+    </details>
+    
+    <details open>
+      <summary class="sidebar-title">Components</summary>
+      <a href="/components/accordion" class="sidebar-link">Accordion</a>
+    <a href="/components/alerts" class="sidebar-link">Alerts</a>
+    <a href="/components/badges" class="sidebar-link">Badges</a>
+    <a href="/components/breadcrumbs" class="sidebar-link">Breadcrumbs</a>
+    <a href="/components/button-group" class="sidebar-link">Button-group</a>
+    <a href="/components/buttons" class="sidebar-link">Buttons</a>
+    <a href="/components/cards" class="sidebar-link">Cards</a>
+    <a href="/components/carousel" class="sidebar-link">Carousel</a>
+    <a href="/components/collapse" class="sidebar-link">Collapse</a>
+    <a href="/components/container" class="sidebar-link">Container</a>
+    <a href="/components/dropdowns" class="sidebar-link">Dropdowns</a>
+    <a href="/components/figures" class="sidebar-link">Figures</a>
+    <a href="/components/footer" class="sidebar-link">Footer</a>
+    <a href="/components/images" class="sidebar-link">Images</a>
+    <a href="/components/list-group" class="sidebar-link">List-group</a>
+    <a href="/components/modals" class="sidebar-link">Modals</a>
+    <a href="/components/navbar" class="sidebar-link">Navbar</a>
+    <a href="/components/offcanvas" class="sidebar-link">Offcanvas</a>
+    <a href="/components/popovers" class="sidebar-link">Popovers</a>
+    <a href="/components/progress" class="sidebar-link active">Progress</a>
+    <a href="/components/scrollspy" class="sidebar-link">Scrollspy</a>
+    <a href="/components/sidebar" class="sidebar-link">Sidebar</a>
+    <a href="/components/tables" class="sidebar-link">Tables</a>
+    <a href="/components/tabs" class="sidebar-link">Tabs</a>
+    <a href="/components/toasts" class="sidebar-link">Toasts</a>
+    <a href="/components/tooltips" class="sidebar-link">Tooltips</a>
+    </details>
+    
+    <details >
+      <summary class="sidebar-title">Forms</summary>
+      <a href="/forms/checks-radios" class="sidebar-link">Checks-radios</a>
+    <a href="/forms/floating-labels" class="sidebar-link">Floating-labels</a>
+    <a href="/forms/form-control" class="sidebar-link">Form-control</a>
+    <a href="/forms/input-group" class="sidebar-link">Input-group</a>
+    <a href="/forms/layout" class="sidebar-link">Layout</a>
+    <a href="/forms/range" class="sidebar-link">Range</a>
+    <a href="/forms/select" class="sidebar-link">Select</a>
+    <a href="/forms/validation" class="sidebar-link">Validation</a>
+    </details>
+    
+    <details >
+      <summary class="sidebar-title">Helpers</summary>
+      <a href="/helpers/clearfix" class="sidebar-link">Clearfix</a>
+    <a href="/helpers/colored-links" class="sidebar-link">Colored-links</a>
+    <a href="/helpers/position" class="sidebar-link">Position</a>
+    <a href="/helpers/ratio" class="sidebar-link">Ratio</a>
+    <a href="/helpers/stretched-link" class="sidebar-link">Stretched-link</a>
+    <a href="/helpers/text-truncation" class="sidebar-link">Text-truncation</a>
+    <a href="/helpers/visually-hidden" class="sidebar-link">Visually-hidden</a>
+    </details>
+    
+    <details >
+      <summary class="sidebar-title">Utilities</summary>
+      <a href="/utilities/background" class="sidebar-link">Background</a>
+    <a href="/utilities/borders" class="sidebar-link">Borders</a>
+    <a href="/utilities/colors" class="sidebar-link">Colors</a>
+    <a href="/utilities/display" class="sidebar-link">Display</a>
+    <a href="/utilities/flex" class="sidebar-link">Flex</a>
+    <a href="/utilities/float" class="sidebar-link">Float</a>
+    <a href="/utilities/interactions" class="sidebar-link">Interactions</a>
+    <a href="/utilities/overflow" class="sidebar-link">Overflow</a>
+    <a href="/utilities/position" class="sidebar-link">Position</a>
+    <a href="/utilities/shadows" class="sidebar-link">Shadows</a>
+    <a href="/utilities/sizing" class="sidebar-link">Sizing</a>
+    <a href="/utilities/spacing" class="sidebar-link">Spacing</a>
+    <a href="/utilities/text" class="sidebar-link">Text</a>
+    <a href="/utilities/vertical-align" class="sidebar-link">Vertical-align</a>
+    <a href="/utilities/visibility" class="sidebar-link">Visibility</a>
+    </details>
+  </aside>
+  
+  <div class="layout-right">
+    <header class="header">
+      <a href="https://github.com/lumora-css/lumora-css" target="_blank" class="header-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+        GitHub
+      </a>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
+        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+    </header>
+    
+    <main class="main-content container-fluid">
+      <p>Documentation and examples for using custom progress bars featuring support for stacked bars, animated backgrounds, and text labels.</p>
+<div class="preview-block">
+  <div class="progress mb-3">
+    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+  <div class="progress mb-3">
+    <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+  <div class="progress mb-3">
+    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+  </div>
+  <div class="progress mb-3">
+    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+  <div class="progress mb-3">
+    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+</div><pre><code class="language-html">&lt;div class=&quot;progress&quot;&gt;
+  &lt;div class=&quot;progress-bar w-75&quot; role=&quot;progressbar&quot; aria-valuenow=&quot;75&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+    </main>
+  </div>
+  
+  <script>
+    // Theme toggling logic
+    const html = document.documentElement;
+    const currentTheme = localStorage.getItem("theme") || "dark"; // Default to dark for premium feel
+    html.setAttribute("data-theme", currentTheme);
+    updateIcon(currentTheme);
+    
+    function toggleTheme() {
+      const isDark = html.getAttribute("data-theme") === "dark";
+      const newTheme = isDark ? "light" : "dark";
+      html.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+      updateIcon(newTheme);
+    }
+    
+    function updateIcon(theme) {
+      const btn = document.querySelector('.theme-toggle');
+      if (theme === 'dark') {
+        btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+      } else {
+        btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+      }
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="/dist/lumora.js"></script>
+</body>
+</html>
+  
