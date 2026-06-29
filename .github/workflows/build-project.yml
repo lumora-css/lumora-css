@@ -34,27 +34,25 @@ jobs:
         git commit -m "chore: automated build artifacts update" || echo "No changes to commit"
         git push
 
-    - name: Checkout Target Docs Repo
-      uses: actions/checkout@v4
-      with:
-        repository: lumora-css/lumora-css.github.io
-        token: ${{ secrets.DEPLOY_TOKEN }}
-        path: gh-pages-repo
-
     - name: Deploy Docs to Target Repo
       run: |
-        # Clear out target repo (keeping .git)
-        cd gh-pages-repo
-        find . -maxdepth 1 ! -name '.git' ! -name '.' -exec rm -rf {} +
-        cd ..
+        # Create output directory
+        mkdir gh-pages-repo
+        
         # Generate static docs directly into target repo
         node docs-build.js gh-pages-repo
+        
         # Copy framework files (dist) into target repo
         cp -R dist gh-pages-repo/dist
-        # Commit and push
+        
+        # Initialize Git and force push to the target repo
         cd gh-pages-repo
+        git init
+        git checkout -b main
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git add .
-        git commit -m "docs: auto-deploy from lumora-css main repository" || echo "No changes to deploy"
-        git push
+        git commit -m "docs: auto-deploy from lumora-css main repository"
+        
+        # Push using the DEPLOY_TOKEN, forcing to main branch
+        git push https://x-access-token:${{ secrets.DEPLOY_TOKEN }}@github.com/lumora-css/lumora-css.github.io.git main --force
