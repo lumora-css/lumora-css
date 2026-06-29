@@ -1,0 +1,49 @@
+// Variables
+
+$breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
+$theme-colors: (
+  "primary": #6366f1,
+  "secondary": #64748b,
+  "success": #10b981,
+  "info": #0ea5e9,
+  "warning": #f59e0b,
+  "danger": #ef4444,
+  "light": #f8fafc,
+  "dark": #0f172a
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px
+);
+
+$grid-columns: 12;
+$grid-gutter-width: 1.5rem;
+
+$spacers: (
+  0: 0,
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 1rem,
+  4: 1.5rem,
+  5: 3rem,
+  auto: auto
+);
+
+$zindex: (
+  n1: -1,
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 3
+);

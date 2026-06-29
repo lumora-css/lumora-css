@@ -1,0 +1,31 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+/* 12-Column Flexbox Grid System */
+@include make-grid-columns();
+
+/* Gutters */
+@each $key, $value in $spacers {
+  .g-#{$key},
+  .gx-#{$key} {
+    --bs-gutter-x: #{$value};
+  }
+  .g-#{$key},
+  .gy-#{$key} {
+    --bs-gutter-y: #{$value};
+  }
+}
+@each $breakpoint, $width in $breakpoints {
+  @include media-breakpoint-up($breakpoint) {
+    @each $key, $value in $spacers {
+      .g-#{$breakpoint}-#{$key},
+      .gx-#{$breakpoint}-#{$key} {
+        --bs-gutter-x: #{$value};
+      }
+      .g-#{$breakpoint}-#{$key},
+      .gy-#{$breakpoint}-#{$key} {
+        --bs-gutter-y: #{$value};
+      }
+    }
+  }
+}

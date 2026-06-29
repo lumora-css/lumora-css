@@ -1,0 +1,118 @@
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 1rem;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.table th {
+  font-weight: var(--font-weight-semibold);
+  background-color: var(--color-bg-alt);
+}
+
+.table tbody tr {
+  transition: background-color var(--transition-fast);
+}
+
+/* Striped variant */
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+[data-theme="dark"] .table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Hover variant */
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+[data-theme="dark"] .table-hover tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+/* Bordered variant */
+.table-bordered {
+  border: 1px solid var(--color-border);
+}
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid var(--color-border);
+}
+
+/* Responsive Table Wrapper */
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Table sizes */
+.table-sm th,
+.table-sm td {
+  padding: 0.25rem 0.5rem;
+}
+
+/* Active and Hover variants */
+.table-active {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+[data-theme="dark"] .table-active {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+/* Contextual Table variants */
+$table-variants: (
+  "primary": var(--color-primary),
+  "secondary": var(--color-secondary),
+  "success": var(--color-success),
+  "info": var(--color-info),
+  "warning": var(--color-warning),
+  "danger": var(--color-danger),
+  "light": var(--color-light),
+  "dark": var(--color-dark)
+);
+
+$table-on-variants: (
+  "primary": var(--color-on-primary),
+  "secondary": var(--color-on-secondary),
+  "success": var(--color-on-success),
+  "info": var(--color-on-info),
+  "warning": var(--color-on-warning),
+  "danger": var(--color-on-danger),
+  "light": var(--color-on-light),
+  "dark": var(--color-on-dark)
+);
+
+@each $color, $value in $table-variants {
+  .table-#{$color} {
+    --color-text: map-get($table-on-variants, $color);
+    background-color: $value;
+    color: var(--color-text);
+  }
+  .table-#{$color} th,
+  .table-#{$color} td,
+  .table-#{$color} thead th,
+  .table-#{$color} tbody + tbody {
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Dark Table */
+.table-dark {
+  color: #fff;
+  background-color: var(--color-dark);
+}
+.table-dark th,
+.table-dark td,
+.table-dark thead th {
+  border-color: rgba(255, 255, 255, 0.1);
+}

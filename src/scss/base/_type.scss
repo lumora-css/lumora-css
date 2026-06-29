@@ -1,0 +1,92 @@
+// Typography
+//
+// Headings, display text, lists, and inline text elements.
+
+// Headings
+%heading {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+h1, .h1 { @extend %heading; font-size: calc(var(--font-size-base) * 2.5); }
+h2, .h2 { @extend %heading; font-size: calc(var(--font-size-base) * 2); }
+h3, .h3 { @extend %heading; font-size: calc(var(--font-size-base) * 1.75); }
+h4, .h4 { @extend %heading; font-size: calc(var(--font-size-base) * 1.5); }
+h5, .h5 { @extend %heading; font-size: calc(var(--font-size-base) * 1.25); }
+h6, .h6 { @extend %heading; font-size: var(--font-size-base); }
+
+// Display headings
+$display-font-sizes: (
+  1: calc(var(--font-size-base) * 5),
+  2: calc(var(--font-size-base) * 4.5),
+  3: calc(var(--font-size-base) * 4),
+  4: calc(var(--font-size-base) * 3.5),
+  5: calc(var(--font-size-base) * 3),
+  6: calc(var(--font-size-base) * 2.5)
+);
+
+$display-font-weight: 300;
+
+@each $size, $value in $display-font-sizes {
+  .display-#{$size} {
+    font-size: $value;
+    font-weight: $display-font-weight;
+    line-height: 1.2;
+  }
+}
+
+// Paragraphs
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+// Lead
+.lead {
+  font-size: calc(var(--font-size-base) * 1.25);
+  font-weight: 300;
+}
+
+// Inline elements
+small, .small {
+  font-size: 0.875em;
+}
+
+mark, .mark {
+  padding: 0.2em;
+  background-color: var(--color-warning);
+  color: var(--color-on-warning);
+}
+
+// Links
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  
+  &:hover {
+    color: var(--color-primary-hover);
+  }
+}
+
+// Lists
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+
+.list-inline {
+  padding-left: 0;
+  list-style: none;
+}
+
+.list-inline-item {
+  display: inline-block;
+
+  &:not(:last-child) {
+    margin-right: .5rem;
+  }
+}

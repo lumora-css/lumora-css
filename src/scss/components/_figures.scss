@@ -1,0 +1,17 @@
+// Figures
+//
+// Figures and figure captions
+
+.figure {
+  display: inline-block;
+}
+
+.figure-img {
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.figure-caption {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
