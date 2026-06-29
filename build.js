@@ -6,21 +6,27 @@ async function build() {
   await rm('./dist', { recursive: true, force: true });
 
   if (typeof Bun !== 'undefined') {
-    const result = await Bun.build({
+    const resultUnmin = await Bun.build({
       entrypoints: ['./src/js/index.js'],
       outdir: './dist',
-      minify: true,
+      minify: false,
       naming: 'lumora.[ext]'
     });
 
-    if (!result.success) {
+    const resultMin = await Bun.build({
+      entrypoints: ['./src/js/index.js'],
+      outdir: './dist',
+      minify: true,
+      naming: 'lumora.min.[ext]'
+    });
+
+    if (!resultUnmin.success || !resultMin.success) {
       console.error("JS Build failed:");
-      for (const message of result.logs) {
-        console.error(message);
-      }
+      if (!resultUnmin.success) resultUnmin.logs.forEach(msg => console.error(msg));
+      if (!resultMin.success) resultMin.logs.forEach(msg => console.error(msg));
     } else {
-      console.log("✅ JS Build successful and minified!");
-      for (const output of result.outputs) {
+      console.log("✅ JS Build successful (minified & unminified)!");
+      for (const output of [...resultUnmin.outputs, ...resultMin.outputs]) {
         console.log(`- ${output.path} (${(output.size / 1024).toFixed(2)} KB)`);
       }
     }
@@ -30,6 +36,7 @@ async function build() {
       const { mkdir, cp } = await import('fs/promises');
       await mkdir('./dist', { recursive: true });
       await cp('./src/js/index.js', './dist/lumora.js');
+      await cp('./src/js/index.js', './dist/lumora.min.js'); // simple copy for fallback
       console.log("✅ JS Build (copy) successful!");
     } catch (e) {
       console.error("JS fallback copy failed:", e);
@@ -38,9 +45,13 @@ async function build() {
     
   // Compile SCSS
   try {
-    const sassResult = sass.compile('./src/scss/index.scss', { style: 'compressed' });
+    const sassResult = sass.compile('./src/scss/index.scss', { style: 'expanded' });
     await import('fs/promises').then(m => m.writeFile('./dist/lumora.css', sassResult.css));
     console.log(`- ./dist/lumora.css (${(sassResult.css.length / 1024).toFixed(2)} KB)`);
+
+    const sassResultMin = sass.compile('./src/scss/index.scss', { style: 'compressed' });
+    await import('fs/promises').then(m => m.writeFile('./dist/lumora.min.css', sassResultMin.css));
+    console.log(`- ./dist/lumora.min.css (${(sassResultMin.css.length / 1024).toFixed(2)} KB)`);
   } catch (e) {
     console.error("SCSS compilation failed:", e);
     return;
