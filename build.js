@@ -56,29 +56,7 @@ async function build() {
     console.error("SCSS compilation failed:", e);
     return;
   }
-    // Generate scoped CSS for Docusaurus previews
-    try {
-      const cssPath = './dist/lumora.css';
-      let cssContent = await import('fs/promises').then(m => m.readFile(cssPath, 'utf8'));
-      
-      // Extract @import rules (must be at top level outside @scope)
-      let imports = '';
-      cssContent = cssContent.replace(/@import\s+(?:url\([^)]+\)|"[^"]+"|'[^']+')([^;]*);/g, match => {
-        imports += match + '\n';
-        return '';
-      });
-
-      // Map global targets to the scoping container (.preview-block)
-      cssContent = cssContent.replace(/:root/g, ':scope');
-      cssContent = cssContent.replace(/\[data-theme="dark"\]/g, 'html[data-theme="dark"] :scope');
-      cssContent = cssContent.replace(/\bbody\s*\{/g, ':scope{');
-
-      const scopedCss = `${imports}\n@scope (.preview-block) {\n${cssContent}\n}`;
-      await import('fs/promises').then(m => m.writeFile('./dist/lumora-scoped.css', scopedCss));
-      console.log("- ./dist/lumora-scoped.css (scoped for docs)");
-    } catch (e) {
-      console.error("Failed to generate scoped CSS:", e);
-    }
+    // Generate scoped CSS for Docusaurus previews removed since it is not used in docs
     
     // Copy for GitHub Pages
     try {
