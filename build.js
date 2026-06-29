@@ -58,14 +58,18 @@ async function build() {
   }
     // Generate scoped CSS for Docusaurus previews removed since it is not used in docs
     
-    // Copy for GitHub Pages
+    // Copy dist files and build static docs for GitHub Pages
     try {
       const { rm, cp } = await import('fs/promises');
       await rm('./docs/static/dist', { recursive: true, force: true }).catch(() => {});
       await cp('./dist', './docs/static/dist', { recursive: true });
       console.log("✅ Copied dist to docs/static/dist for GitHub Pages");
+      
+      console.log("Building static HTML docs...");
+      const { execSync } = await import('child_process');
+      execSync('bun run docs-build.js', { stdio: 'inherit' });
     } catch(e) {
-      console.error("Failed to copy dist to docs:", e);
+      console.error("Failed to build static docs:", e);
     }
 }
 
