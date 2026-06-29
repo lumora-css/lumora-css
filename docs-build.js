@@ -4,7 +4,7 @@ import { join, dirname } from "path";
 
 const DOCS_DIR = join(process.cwd(), "docs");
 const STATIC_DIR = join(process.cwd(), "docs/static");
-const BASE_URL = "/lumora-css"; // For GitHub Pages
+const BASE_URL = ""; // Empty string for root domain (e.g. https://lumora-css.github.io/)
 
 // Ensure static directories exist
 mkdirSync(STATIC_DIR, { recursive: true });
