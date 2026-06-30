@@ -35,12 +35,12 @@ Include Lumora directly in your HTML using our CDN. This requires no build step.
 
 **CSS** (Place inside your `<head>` tag)
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lumora-css@latest/dist/lumora.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/lumora-css/lumora-css/dist/lumora.min.css" rel="stylesheet">
 ```
 
 **JavaScript** (Place just before the closing `</body>` tag)
 ```html
-<script src="https://cdn.jsdelivr.net/npm/lumora-css@latest/dist/lumora.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/lumora-css/lumora-css@main/dist/lumora.min.js"></script>
 ```
 
 ### NPM / Yarn / Bun
@@ -74,7 +74,7 @@ import 'lumora-css/dist/lumora.js';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lumora Starter</title>
-  <link href="https://cdn.jsdelivr.net/npm/lumora-css@latest/dist/lumora.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/gh/lumora-css/lumora-css/dist/lumora.min.css" rel="stylesheet">
 </head>
 <body>
   <main class="container" style="padding: 3rem 1.5rem;">
@@ -82,7 +82,7 @@ import 'lumora-css/dist/lumora.js';
     <p>You have successfully installed the framework.</p>
     <button class="btn btn-primary">Get Started</button>
   </main>
-  <script src="https://cdn.jsdelivr.net/npm/lumora-css@latest/dist/lumora.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/lumora-css/lumora-css/dist/lumora.min.js"></script>
 </body>
 </html>
 ```

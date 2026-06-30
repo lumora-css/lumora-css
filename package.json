@@ -5,13 +5,10 @@
   "main": "index.html",
   "scripts": {
     "build": "bun run build.js",
-    "dev": "bun x concurrently \"bun x nodemon --watch src -e scss,js --exec \\\"bun run build.js\\\"\" \"bun run docs-server.js\"",
-    "docs:dev": "bun run docs-server.js",
-    "docs:build": "echo 'No build step required. Server dynamically renders markdown.' && exit 0"
+    "dev": "bun x nodemon --watch src -e scss,js --exec \"bun run build.js\""
   },
   "dependencies": {
-    "clsx": "^2.0.0",
-    "marked": "^18.0.5"
+    "clsx": "^2.0.0"
   },
   "devDependencies": {
     "sass": "^1.101.0",
