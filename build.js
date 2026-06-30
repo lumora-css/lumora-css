@@ -33,13 +33,29 @@ async function build() {
   } else {
     console.log("Bun not found, falling back to basic JS copy...");
     try {
-      const { mkdir, cp } = await import('fs/promises');
+      const { mkdir, readFile, writeFile } = await import('fs/promises');
       await mkdir('./dist', { recursive: true });
-      await cp('./src/js/index.js', './dist/lumora.js');
-      await cp('./src/js/index.js', './dist/lumora.min.js'); // simple copy for fallback
-      console.log("✅ JS Build (copy) successful!");
+      
+      const jsFiles = [
+        'theme.js', 'sidebar.js', 'accordion.js', 'dropdown.js', 
+        'modal.js', 'alert.js', 'tab.js', 'carousel.js', 'collapse.js', 
+        'offcanvas.js', 'popover.js', 'scrollspy.js', 'toast.js', 'tooltip.js'
+      ];
+      
+      let combinedJS = '';
+      for (const file of jsFiles) {
+        try {
+          combinedJS += await readFile('./src/js/' + file, 'utf-8') + '\n\n';
+        } catch (err) {
+          console.warn(`Warning: Could not read ./src/js/${file}`);
+        }
+      }
+      
+      await writeFile('./dist/lumora.js', combinedJS);
+      await writeFile('./dist/lumora.min.js', combinedJS); // simple copy for fallback
+      console.log("✅ JS Build (fallback bundler) successful!");
     } catch (e) {
-      console.error("JS fallback copy failed:", e);
+      console.error("JS fallback bundle failed:", e);
     }
   }
     

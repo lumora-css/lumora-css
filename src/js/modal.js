@@ -1,6 +1,6 @@
 const initModal = () => {
-  const modalTriggers = document.querySelectorAll('[data-toggle="modal"]');
-  const modalDismissers = document.querySelectorAll('[data-dismiss="modal"]');
+  const modalTriggers = document.querySelectorAll('[data-toggle="modal"], [data-bs-toggle="modal"]');
+  const modalDismissers = document.querySelectorAll('[data-dismiss="modal"], [data-bs-dismiss="modal"]');
   const backdrops = document.querySelectorAll('.modal-backdrop');
 
   function openModal(modalId) {
@@ -21,7 +21,7 @@ const initModal = () => {
   modalTriggers.forEach(trigger => {
     trigger.addEventListener('click', (e) => {
       e.preventDefault();
-      const targetId = trigger.getAttribute('data-target');
+      const targetId = trigger.getAttribute('data-target') || trigger.getAttribute('data-bs-target');
       if (targetId) openModal(targetId.replace('#', ''));
     });
   });
